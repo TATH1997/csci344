@@ -1,0 +1,271 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body * {
+    box-sizing: border-box;
+    background-color: aliceblue;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: aliceblue;
+}
+
+.social-box ul{
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: center;
+    flex-wrap: nowrap;
+    list-style-type:none;
+}
+
+li {
+    display: flex;
+    padding: 10px;
+    font-style: normal;
+}
+
+.news-feed {
+    display: flex; 
+    margin: 100px 15%; /* first argument is vertical margin, second argument is horizontal margin */
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.post {
+    /* box-sizing:content-box;      */
+    border: solid 1px rgb(0, 0, 0);
+    margin: 30px 0px; /* turned off left-right margin */
+    width: 75%;
+}
+
+.post img {
+    width: 100%;
+}
+
+.post header {
+    display: flex;
+    /* box-sizing:content-box;      */
+    border: solid 3px rgb(0, 0, 0);
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-family: Comfortaa, sans-serif;
+}
+
+.post .description ul {
+    display: flex;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .news-feed {
+        margin: 150px 10%; /* first argument is vertical margin, second argument is horizontal margin */
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .news-feed {
+        margin: 150px 4%; /* first argument is vertical margin, second argument is horizontal margin */
+    }
+}
+
+i {
+    font-size: 130%;
+}
+
+.social-box ul i {
+    margin: 10%;
+}  
+
+.description ul{
+    padding: 0%;
+}
+
+.description {
+    margin-left: 2%;
+}
+
+.commentBox {
+    border: dotted 1px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.commentBox a {
+    font-size: 125%;
+    padding-right: 0%;
+    padding-left: 65%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+}
+.commentBox p {
+    display: flex;
+    padding-left: 3%;
+}
+.commentBox i{
+    display: flex;
+    padding-left: 1%;
+}
+
+.Recommendations{
+    display: flex;
+    position: fixed;
+    top: auto;
+    right: 0px;
+    width: 20%;
+    height: 100%;
+    width: 30%;
+    padding-top: 2%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1%;
+}
+
+.profile img{
+    border-radius: 100%;
+}
+.profile h1{
+    padding-left: 10%;
+    font-size:x-large;
+    font-family: Comfortaa, sans-serif;
+}
+.suggestions h2{
+    display: flex;
+    font-size:small;
+}
+
+.suggestions header{
+    display: flex;
+    font-size: small;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 5%;
+}
+
+.suggestions .profile header h2{
+    margin: 0%;
+}
+
+.suggestions .profile a{
+    padding-left: 10%;
+}
+
+a:link { text-decoration: none; }
+
+.storiesBar{
+    padding-top: 3%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    border: solid 1px;
+    width: 75%;
+}
+.storiesBar .story{
+    font-family: Comfortaa, sans-serif;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 2%;
+}
+.storiesBar img{
+    border-radius: 100%;
+    border-color: black;
+    border-width: 1cap;
+}
+.story h1{
+    font-weight: 300;
+}
+
+nav{
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    justify-content: space-between;
+    background-color:steelblue;
+}
+nav li{
+    font-family: Comfortaa, sans-serif;
+    background-color:steelblue;
+}
+nac ul {
+    background-color:steelblue;
+}
+
+@media screen and (max-width: 720px){
+    .Recommendations{
+        height: 0%;
+        width: 0%;
+    }
+
+
+    .post{
+        width: 100%;
+        margin-bottom: 0%;
+    }
+    .news-feed{
+        width: 100%;
+        margin-left: 0%;
+    }
+
+    .storiesBar{
+        width: 100%;
+    }
+    .story h1{
+        font-size: x-small;
+    }
+
+    .commentBox a{
+        padding-left: 35%;
+    }
+    nav{
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background: lightskyblue;
+    height: auto;
+    flex-direction: row;
+    margin: 0%;
+    align-items: center;
+    }
+    nav ul {
+        padding-left: 0%;
+        margin: 0%;
+    }
+    nav h1 {
+        margin: 0%;
+    }
+    .storiesBar{
+        width: 100%;
+    }
+    .story{
+        padding: 0%;
+        margin: 0%;
+        width: 20%;
+    }
+}

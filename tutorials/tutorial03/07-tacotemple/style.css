@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.grid-container {
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-areas: 
+    "card1 card2"
+    "card3 card4";
+    grid-gap: 1rem;
+}
+
+.card1{
+    grid-area: card1;
+    box-sizing: border-box;
+    border: dotted 1px #CCC;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+}
+.card2{
+    grid-area: card2;
+    box-sizing: border-box;
+    border: dotted 1px #CCC;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+}
+.card3{
+    grid-area: card3;
+    box-sizing: border-box;
+    border: dotted 1px #CCC;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+}
+.card4{
+    grid-area: card4;
+    box-sizing: border-box;
+    border: dotted 1px #CCC;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+}
+
+img {
+    padding: 2px;              
+    margin: 10px;               
+    width: 40vh;   
+    height: 150px;
+}
