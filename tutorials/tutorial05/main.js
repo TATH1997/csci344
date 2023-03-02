@@ -170,6 +170,4 @@ const showData = (searchTerm, openOnly) => {
     //     ).map(
     //         dataToHTML
     //     ).join('');
-    
-
 }
