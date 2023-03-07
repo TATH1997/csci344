@@ -10,15 +10,15 @@ const showStories = async (token) => {
         }
     })
     const data = await response.json();
-    //console.log('Stories:', data);
+    console.log('Stories:', data);
     const htmlChunk=data.map(storiesToHTML).join(' ');
-    document.getElementsByClassName('storiesBar').innerHTML=htmlChunk;
+    document.querySelector('#storiesBar').innerHTML=htmlChunk;
 }
 
 const storiesToHTML= story => {
 
-    return ` <section>
-    <img scr="${story.thumb_url}"/><br>
+    return ` <section class=story>
+    <img src="${story.user.thumb_url}"/>
     <p>${story.user.username}</p>
     </section>`;
 }
@@ -32,6 +32,7 @@ const initPage = async () => {
     // first log in (we will build on this after Spring Break):
     const token = await getAccessToken(rootURL, 'webdev', 'password');
 
+    //console.log(token);
     // then use the access token provided to access data on the user's behalf
     showStories(token);
     showPosts(token);

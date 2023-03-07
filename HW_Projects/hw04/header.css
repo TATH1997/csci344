@@ -167,7 +167,7 @@ i {
 
 a:link { text-decoration: none; }
 
-.storiesBar{
+#storiesBar{
     padding-top: 3%;
     display: flex;
     flex-wrap: nowrap;
@@ -177,7 +177,7 @@ a:link { text-decoration: none; }
     border: solid 1px;
     width: 75%;
 }
-.storiesBar .story{
+#storiesBar .story{
     font-family: Comfortaa, sans-serif;
     display: flex;
     flex-direction: column;
@@ -185,16 +185,16 @@ a:link { text-decoration: none; }
     align-items: center;
     padding: 2%;
 }
-.storiesBar img{
+#storiesBar img{
     border-radius: 100%;
     border-color: black;
     border-width: 1cap;
 }
-.story h1{
+.story p{
     font-weight: 300;
 }
 
-nav{
+.nav{
     display: flex;
     position: fixed;
     top: 0px;
@@ -207,11 +207,11 @@ nav{
     justify-content: space-between;
     background-color:steelblue;
 }
-nav li{
+.nav li{
     font-family: Comfortaa, sans-serif;
     background-color:steelblue;
 }
-nac ul {
+.nav ul {
     background-color:steelblue;
 }
 
@@ -241,7 +241,7 @@ nac ul {
     .commentBox a{
         padding-left: 35%;
     }
-    nav{
+    .nav{
     display: flex;
     position: fixed;
     top: 0px;
@@ -253,11 +253,11 @@ nac ul {
     margin: 0%;
     align-items: center;
     }
-    nav ul {
+    .nav ul {
         padding-left: 0%;
         margin: 0%;
     }
-    nav h1 {
+    .nav h1 {
         margin: 0%;
     }
     .storiesBar{
