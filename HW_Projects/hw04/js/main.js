@@ -10,7 +10,17 @@ const showStories = async (token) => {
         }
     })
     const data = await response.json();
-    console.log('Stories:', data);
+    //console.log('Stories:', data);
+    const htmlChunk=data.map(storiesToHTML).join(' ');
+    document.getElementsByClassName('storiesBar').innerHTML=htmlChunk;
+}
+
+const storiesToHTML= story => {
+
+    return ` <section>
+    <img scr="${story.thumb_url}"/><br>
+    <p>${story.user.username}</p>
+    </section>`;
 }
 
 const showPosts = async (token) => {
@@ -25,6 +35,12 @@ const initPage = async () => {
     // then use the access token provided to access data on the user's behalf
     showStories(token);
     showPosts(token);
+    //posts
+    //suggestions
 }
 
+//Kicks off site
 initPage();
+
+
+
