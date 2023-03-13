@@ -26,7 +26,7 @@ li {
     font-style: normal;
 }
 
-.news-feed {
+.newsFeed, .storiesBar {
     display: flex; 
     margin: 100px 15%; /* first argument is vertical margin, second argument is horizontal margin */
     align-content: center;
@@ -34,7 +34,7 @@ li {
     flex-direction: column;
 }
 
-.post {
+.post, .storiesBar {
     /* box-sizing:content-box;      */
     border: solid 1px rgb(0, 0, 0);
     margin: 30px 0px; /* turned off left-right margin */
@@ -61,13 +61,13 @@ li {
 
 
 @media screen and (max-width: 1100px) {
-    .news-feed {
+    .newsFeed, .storiesBar {
         margin: 150px 10%; /* first argument is vertical margin, second argument is horizontal margin */
     }
 }
 
 @media screen and (max-width: 700px) {
-    .news-feed {
+    .newsFeed, .storiesBar {
         margin: 150px 4%; /* first argument is vertical margin, second argument is horizontal margin */
     }
 }
@@ -87,6 +87,9 @@ i {
 .description {
     margin-left: 2%;
 }
+
+
+ 
 
 .commentBox {
     border: dotted 1px;
@@ -144,12 +147,12 @@ i {
     font-size:x-large;
     font-family: Comfortaa, sans-serif;
 }
-.suggestions h2{
+#suggestions h2{
     display: flex;
     font-size:small;
 }
 
-.suggestions header{
+#suggestions header{
     display: flex;
     font-size: small;
     flex-direction: column;
@@ -157,17 +160,17 @@ i {
     padding-left: 5%;
 }
 
-.suggestions .profile header h2{
+#suggestions .profile header h2{
     margin: 0%;
 }
 
-.suggestions .profile a{
+#suggestions .profile a{
     padding-left: 10%;
 }
 
 a:link { text-decoration: none; }
 
-#storiesBar{
+.storiesBar{
     padding-top: 3%;
     display: flex;
     flex-wrap: nowrap;
@@ -175,9 +178,8 @@ a:link { text-decoration: none; }
     align-items: center;
     flex-direction: row;
     border: solid 1px;
-    width: 75%;
 }
-#storiesBar .story{
+.storiesBar .story{
     font-family: Comfortaa, sans-serif;
     display: flex;
     flex-direction: column;
@@ -185,7 +187,7 @@ a:link { text-decoration: none; }
     align-items: center;
     padding: 2%;
 }
-#storiesBar img{
+.storiesBar img{
     border-radius: 100%;
     border-color: black;
     border-width: 1cap;
@@ -226,7 +228,7 @@ a:link { text-decoration: none; }
         width: 100%;
         margin-bottom: 0%;
     }
-    .news-feed{
+    .newsFeed {
         width: 100%;
         margin-left: 0%;
     }
@@ -234,7 +236,7 @@ a:link { text-decoration: none; }
     .storiesBar{
         width: 100%;
     }
-    .story h1{
+    #story h1{
         font-size: x-small;
     }
 
