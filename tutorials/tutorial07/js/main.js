@@ -55,14 +55,14 @@ const showPosts = async () => {
 const getBookMarkButton = post => {
     if(post.current_user_bookmark_id!=null) {
         return  `
-            <button onclick="unbookMarkPost(${post.current_user_bookmark_id}, ${post.id})">
+            <button onclick="unbookMarkPost(${post.current_user_bookmark_id}, ${post.id})" aria-label="Remove Bookmark">
                 <i class="fa-solid fa-bookmark"></i>
             </button>
             `;
     }
     else {
         return  `
-        <button onclick="bookMarkPost(${post.id})">
+        <button onclick="bookMarkPost(${post.id})" aria-label="Bookmark Post">
             <i class="fa-regular fa-bookmark"></i>
         </button>
         `;
@@ -72,14 +72,14 @@ const getBookMarkButton = post => {
 const getHeartButton = post => {
     if(post.current_user_like_id!=null) {
         return  `
-            <button onclick="unheartPost(${post.current_user_like_id}, ${post.id})">
+            <button onclick="unheartPost(${post.current_user_like_id}, ${post.id})" aria-label="Unlike post">
                 <i class="fas fa-heart"></i>
             </button>
             `;
     }
     else {
         return  `
-        <button onclick="heartPost(${post.id})">
+        <button onclick="heartPost(${post.id})" aria-label="Like post">
             <i class="far fa-heart"></i>
         </button>
         `;
@@ -181,6 +181,9 @@ const postToHTML = post => {
     return `
         <section id="post_${post.id}" class="post">
             <img src="${post.image_url}" alt="Fake image" />
+            <section> 
+                likes: <strong>${post.likes.length} </strong>
+            </section>
             ${getHeartButton(post)}
             <button class="icon-button"><i class="far fa-comment"></i></button>
             <button class="icon-button"><i class="far fa-paper-plane"></i></button>
@@ -188,17 +191,19 @@ const postToHTML = post => {
 
             <p>${post.caption}</p>
             ${ showCommentAndButtonIfItMakesSense(post) }
-            <input type="text" id="comm" aria-label="add Commment">
+            <input type="text" id="comm" aria-label="add Commment"> 
             <button onclick="addcomment(${post.id})">post comment</button>
         </section>
     `
 }
 
 const addcomment = async (postId) => {
+    const text=document.getElementById('comm').value; 
     // define the endpoint:
     const endpoint = `${rootURL}/api/comments`;
     const postData = {
-        "post_id": postId
+        "post_id": postId,
+        "text": text
     };
 
     // Create the comment:
@@ -248,8 +253,14 @@ const initPage = async () => {
     // query for suggestions
 }
 
-const followSwitch = butt=> {
-    //implament me pls
+const followSwitch = thing => {
+    if(thing.getAttribute("aria-checked")) {
+        alert("follow!");
+    }
+    else{
+        alert("unfollow");
+    }
+    
 }
 
 /********************/
@@ -279,7 +290,7 @@ const suggestionToHTML = suggestion=>{
             <h2>${suggestion.username}</h2>
             <h2>Suggested for you</h2>
         </header>
-        <button onclick=followSwitch()>follow</button>
+        <button onclick=followSwitch(${this}) data-id=${suggestion.id} aria-checked="true">follow</button>
     </section>`;
 }
 
