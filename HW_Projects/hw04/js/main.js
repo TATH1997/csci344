@@ -10,9 +10,10 @@ const showStories = async (token) => {
         }
     })
     const data = await response.json();
-    //console.log('Stories:', data);
+    console.log('Stories:', data);
     const htmlChunk=data.map(storiesToHTML).join(' ');
-    document.querySelector('.storiesBar').insertAdjacentHTML=htmlChunk;
+    console.log(htmlChunk);
+    document.querySelector('.storiesBar').innerHTML=htmlChunk;
 }
 
 const storiesToHTML= story => {
@@ -33,7 +34,7 @@ const showPosts = async (token) => {
     const data = await response.json();
     //console.log('Posts:', data);
     const htmlChunk=data.map(postsToHTML).join(' ');
-    document.querySelector('.newsFeed').innerHTML=htmlChunk;
+    document.querySelector('.posts').innerHTML=htmlChunk;
 }
 
 const commentToHTML = comment=>{

@@ -38,6 +38,37 @@ main {
     align-items: center;
 }
 
+.suggestions img{
+    border-radius: 50%;
+    width: 50px;
+    border: solid 3px #DDD;
+}
+.suggestions  {
+    display: flex;
+    position: fixed;
+    top: auto;
+    right: 0px;
+    width: 20%;
+    height: 100%;
+    width: 30%;
+    padding-top: 2%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+.profile{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1%;
+}
+.profile h2{
+    font-size: .9em;
+}
+
+
 .story img {
     border-radius: 50%;
     width: 50px;

@@ -1,4 +1,1 @@
-Where is my search term that Im compairing against course? 
-Where is this 'course' object defined? 
-In course-data there is obvously some object-like structure at play, 
-but I cant find the definition anywhere
+post.current_user_bookmark_id, where is this current_user_bookmark_id defined?

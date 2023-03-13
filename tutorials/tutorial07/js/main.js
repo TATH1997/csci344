@@ -69,6 +69,23 @@ const getBookMarkButton = post => {
     }
 }
 
+const getHeartButton = post => {
+    if(post.current_user_like_id!=null) {
+        return  `
+            <button onclick="unheartPost(${post.current_user_like_id}, ${post.id})">
+                <i class="fas fa-heart"></i>
+            </button>
+            `;
+    }
+    else {
+        return  `
+        <button onclick="heartPost(${post.id})">
+            <i class="far fa-heart"></i>
+        </button>
+        `;
+    }
+}
+
 
 
 const requeryRedraw = async (postId) =>{
@@ -82,6 +99,43 @@ const requeryRedraw = async (postId) =>{
     const data = await response.json();
     const htmlString=postToHTML(data);
     targetElementAndReplace(`#post_${postId}`, htmlString)
+}
+
+const heartPost = async (postId) => {
+    // define the endpoint:
+    const endpoint = `${rootURL}/api/posts/likes/`;
+    const postData = {
+        "post_id": postId
+    };
+
+    // Create the like:
+    const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(postData)
+    })
+    const data = await response.json();
+    console.log(data);
+    requeryRedraw(postId);
+}
+
+const unheartPost = async (bookmarkId, postId) => {
+    // define the endpoint:
+    const endpoint = `${rootURL}/api/posts/likes/${bookmarkId}`;
+
+    // Create the bookmark:
+    const response = await fetch(endpoint, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    const data = await response.json();
+    requeryRedraw(postId);
 }
 
 
@@ -127,13 +181,38 @@ const postToHTML = post => {
     return `
         <section id="post_${post.id}" class="post">
             <img src="${post.image_url}" alt="Fake image" />
-            
+            ${getHeartButton(post)}
+            <button class="icon-button"><i class="far fa-comment"></i></button>
+            <button class="icon-button"><i class="far fa-paper-plane"></i></button>
             ${getBookMarkButton(post)}
 
             <p>${post.caption}</p>
             ${ showCommentAndButtonIfItMakesSense(post) }
+            <input type="text" id="comm" aria-label="add Commment">
+            <button onclick="addcomment(${post.id})">post comment</button>
         </section>
     `
+}
+
+const addcomment = async (postId) => {
+    // define the endpoint:
+    const endpoint = `${rootURL}/api/comments`;
+    const postData = {
+        "post_id": postId
+    };
+
+    // Create the comment:
+    const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(postData)
+    })
+    const data = await response.json();
+    console.log(data);
+    requeryRedraw(postId);
 }
 
 showModal = () => {
@@ -163,9 +242,45 @@ const initPage = async () => {
     // then use the access token provided to access data on the user's behalf
     showStories();
     showPosts();
+    showSuggestions();
 
     // query for the user's profile
     // query for suggestions
+}
+
+const followSwitch = butt=> {
+    //implament me pls
+}
+
+/********************/
+/*   Suggestions    */
+/********************/
+
+const showSuggestions = async () => {
+    const endpoint = `${rootURL}/api/suggestions/`;
+    const response = await fetch(endpoint, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    const data = await response.json();
+    console.log('suggestions:', data);
+    const htmlChunk=data.map(suggestionToHTML).join(' ');
+    document.querySelector('.suggestions').innerHTML=htmlChunk;
+}
+
+const suggestionToHTML = suggestion=>{
+    return `<section class="profile">
+    <img 
+        src=${suggestion.thumb_url} 
+        alt="profilePic" width="50" height="50"/>
+        <header>
+            <h2>${suggestion.username}</h2>
+            <h2>Suggested for you</h2>
+        </header>
+        <button onclick=followSwitch()>follow</button>
+    </section>`;
 }
 
 
@@ -176,8 +291,8 @@ const initPage = async () => {
 // helper function for logging into the website:
 const getAccessToken = async (rootURL, username, password) => {
     const postData = {
-        "username": username,
-        "password": password
+        "username": "jacob",
+        "password": "jacob_password"
     };
     const endpoint = `${rootURL}/api/token/`;
     const response = await fetch(endpoint, {
