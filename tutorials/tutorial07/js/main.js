@@ -20,7 +20,7 @@ const showStories = async () => {
         }
     })
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     const htmlChunk = data.map(storyToHtml).join('');
     document.querySelector('#stories').innerHTML = htmlChunk;
 }
@@ -118,7 +118,7 @@ const heartPost = async (postId) => {
         body: JSON.stringify(postData)
     })
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     requeryRedraw(postId);
 }
 
@@ -156,7 +156,7 @@ const bookMarkPost = async (postId) => {
         body: JSON.stringify(postData)
     })
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     requeryRedraw(postId);
 }
 
@@ -216,7 +216,7 @@ const addcomment = async (postId) => {
         body: JSON.stringify(postData)
     })
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     requeryRedraw(postId);
 }
 
@@ -253,14 +253,21 @@ const initPage = async () => {
     // query for suggestions
 }
 
-const followSwitch = thing => {
-    if(thing.getAttribute("aria-checked")) {
-        alert("follow!");
-    }
-    else{
-        alert("unfollow");
-    }
-    
+
+//dosent work, dont know why
+const followSwitch = async (sugId) => {
+    console.log(sugId);
+    const endpoint = `${rootURL}/api/following/`;
+    const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(sugId)
+        })
+    const data = await response.json();
+    console.log(data);
 }
 
 /********************/
@@ -282,6 +289,7 @@ const showSuggestions = async () => {
 }
 
 const suggestionToHTML = suggestion=>{
+    console.log("Suggestion: ", suggestion);
     return `<section class="profile">
     <img 
         src=${suggestion.thumb_url} 
@@ -290,7 +298,7 @@ const suggestionToHTML = suggestion=>{
             <h2>${suggestion.username}</h2>
             <h2>Suggested for you</h2>
         </header>
-        <button onclick=followSwitch(${this}) data-id=${suggestion.id} aria-checked="true">follow</button>
+        <button id="foll" onclick="followSwitch(${suggestion.id})" aria-checked="true">follow</button>
     </section>`;
 }
 
