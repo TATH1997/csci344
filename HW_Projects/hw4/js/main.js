@@ -33,6 +33,29 @@ const storyToHtml = story => {
     `
 }
 
+const showProfile = async () => {
+    const endpoint = `${rootURL}/api/profile/`;
+    const response = await fetch(endpoint, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    const data = await response.json();
+    //console.log("profile: ", data);
+    const htmlChunk = profileToHTML(data);
+    document.querySelector('.userProfile').innerHTML = htmlChunk;
+}
+
+const profileToHTML = profile =>{
+    return `
+        <header>
+            <img src="${profile.thumb_url}" class="pic" />
+            <h2>${profile.username}</h2>
+        </header>`;
+}
+
 const showPosts = async () => {
     // 1. go out to the internet and grab our posts
     // 2. save the resulting data to a variable
@@ -180,6 +203,7 @@ const postToHTML = post => {
     // console.log(post.comments.length);
     return `
         <section id="post_${post.id}" class="post">
+            <section class=header><strong>${post.user.username}</strong></section>
             <img src="${post.image_url}" alt="Fake image" />
             <section> 
                 likes: <strong>${post.likes.length} </strong>
@@ -189,12 +213,12 @@ const postToHTML = post => {
             <button class="icon-button"><i class="far fa-paper-plane"></i></button>
             ${getBookMarkButton(post)}
 
-            <p>${post.caption}</p>
+            <p><b>${post.user.username}: </b>${post.caption}</p>
             ${ showCommentAndButtonIfItMakesSense(post) }
             <input type="text" id="comm" aria-label="add Commment"> 
             <button onclick="addcomment(${post.id})">post comment</button>
         </section>
-    `
+        `;
 }
 
 const addcomment = async (postId) => {
@@ -220,8 +244,40 @@ const addcomment = async (postId) => {
     requeryRedraw(postId);
 }
 
-showModal = () => {
-    alert('Show Modal');
+hide =() =>{
+    const thing=document.getElementsByClassName('modal-content')[0];
+    thing.remove();
+    document.querySelector('.modal').style.display="none";
+}
+
+const showModal = async (id) => {
+    const response = await fetch("https://photo-app-secured.herokuapp.com/api/posts/"+id, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+    const post = await response.json();
+    const htmlChunk = post.comments.map(commentToHTML).join('');
+    const img=post.image_url;
+    const box=`
+    <div class="modal-content">
+      <span onclick="hide()" class="close">&times;</span>
+      <img src="${img}"/>
+      <p>${htmlChunk}</p>
+    </div>`;
+    document.querySelector('.modal').style.display="block";
+    document.querySelector('.modal').innerHTML = box;
+    document.body.style.overflowY = 'auto';
+}
+
+commentToHTML =comment=> {
+    return `
+    <div>
+        <img src="${comment.user.thumb_url}"/>
+        <p><b>${comment.user.username}: </b>${comment.text}</p>
+    </div>`
 }
 
 const showCommentAndButtonIfItMakesSense = post => {
@@ -229,8 +285,8 @@ const showCommentAndButtonIfItMakesSense = post => {
     const lastCommentIndex = post.comments.length - 1;
     if (hasComments) {
         return `<div>
-            <button onclick="showModal()">View all ${post.comments.length} comments</button>
-            <p>${post.comments[lastCommentIndex].text}</p>
+            <button onclick="showModal(${post.id})">View all ${post.comments.length} comments</button>
+            <p><b>${post.comments[lastCommentIndex].user.username}: </b>${post.comments[lastCommentIndex].text}</p>
         </div>`;
     } else {
         return '';
@@ -242,21 +298,20 @@ const initPage = async () => {
     // set the token as a global variable 
     // (so that all of your other functions can access it):
     token = await getAccessToken(rootURL, 'webdev', 'password');
-    console.log(token);
+    //console.log(token);
     
     // then use the access token provided to access data on the user's behalf
     showStories();
     showPosts();
     showSuggestions();
-
-    // query for the user's profile
-    // query for suggestions
+    showProfile();
 }
 
 
-//dosent work, dont know why
+//Error 500 
+//args break, also 'token expired error' 
 const followSwitch = async (sugId) => {
-    console.log(sugId);
+    //console.log(sugId);
     const endpoint = `${rootURL}/api/following/`;
     const response = await fetch(endpoint, {
             method: "POST",
@@ -264,10 +319,12 @@ const followSwitch = async (sugId) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify(sugId)
+            body: JSON.stringify({
+                "user_id": sugId
+            })
         })
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
 }
 
 /********************/
@@ -283,13 +340,13 @@ const showSuggestions = async () => {
         }
     })
     const data = await response.json();
-    console.log('suggestions:', data);
+    //console.log('suggestions:', data);
     const htmlChunk=data.map(suggestionToHTML).join(' ');
     document.querySelector('.suggestions').innerHTML=htmlChunk;
 }
 
 const suggestionToHTML = suggestion=>{
-    console.log("Suggestion: ", suggestion);
+    //console.log("Suggestion: ", suggestion);
     return `<section class="profile">
     <img 
         src=${suggestion.thumb_url} 
