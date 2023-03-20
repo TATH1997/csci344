@@ -261,9 +261,11 @@ const showModal = async (id) => {
     const post = await response.json();
     const htmlChunk = post.comments.map(commentToHTML).join('');
     const img=post.image_url;
+    const profile=profileToHTML(post.user);
     const box=`
     <div class="modal-content">
       <span onclick="hide()" class="close">&times;</span>
+      ${profile}
       <img src="${img}"/>
       <p>${htmlChunk}</p>
     </div>`;

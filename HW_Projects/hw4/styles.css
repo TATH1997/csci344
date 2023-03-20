@@ -58,6 +58,7 @@ main {
     justify-content: flex-start;
     font-family: 'Comfortaa', cursive;
 }
+
 .profile{
     display: flex;
     flex-direction: row;
@@ -68,6 +69,17 @@ main {
 }
 .profile h2{
     font-size: .9em;
+}
+
+.userProfile header{
+    align-items: center;
+    display: flex;
+    width: 25vw;
+}
+.userProfile img {
+    border-radius: 50%;
+    width: 50px;
+    border: solid 3px #DDD;
 }
 
 
@@ -150,6 +162,8 @@ aside {
     text-decoration: none;
     cursor: pointer;
   }
+
+
 /*MODAL STUFF*/
 
 @media screen and (max-width: 800px) {
