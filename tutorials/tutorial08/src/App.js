@@ -4,6 +4,8 @@ import Profile from './Profile';
 import {useState, useEffect} from "react";
 import { getHeaders } from './utils';
 import Suggestions from './Suggestions';
+import Stories from './Stories';
+import Posts from './Posts';
 
 export default function App ({token}) { 
     const [profile, setProfile]=useState(null);
@@ -19,6 +21,7 @@ export default function App ({token}) {
         fetchProfile();
     }, [token]);
     console.log('access token:', token);
+
     
     return (
         <div>
@@ -34,22 +37,17 @@ export default function App ({token}) {
                 <Profile profile={profile}/>
                 <div className="suggestions">
                     <div>
-                        <Suggestions suggestion={suggestion}/>
+                        {/*<Suggestions suggestion={suggestion}/>*/}
                     </div>
                 </div>
             </aside>
 
             <main>
 
-                {/* Stories */}
-                <header className="stories">
-                    Stories go here...
-                </header>
-
-                {/* Posts */}
-                <div id="posts">
-                    Posts go here...
-                </div>
+            <main className="content">
+                <Stories />
+                <Posts />
+            </main>
 
             </main>
 
