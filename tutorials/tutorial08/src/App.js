@@ -21,7 +21,6 @@ export default function App ({token}) {
         fetchProfile();
     }, [token]);
     console.log('access token:', token);
-
     
     return (
         <div>
@@ -29,25 +28,32 @@ export default function App ({token}) {
             {/* Navbar */}
             <nav className="main-nav">
                 <h1>Photo App</h1>
-                <NavLinks token={token} profile={profile} />
+                <NavLinks token={token} profile={profile}/>
             </nav>
            
            {/* Right Panel */}
             <aside>
-                <Profile profile={profile}/>
+                <header>
+                    <Profile profile={profile}/>
+                </header>
                 <div className="suggestions">
                     <div>
-                        {/*<Suggestions suggestion={suggestion}/>*/}
+                        
                     </div>
                 </div>
             </aside>
 
             <main>
 
-            <main className="content">
-                <Stories />
-                <Posts />
-            </main>
+                {/* Stories */}
+                <header className="stories">
+                    Stories go here...
+                </header>
+
+                {/* Posts */}
+                <div id="posts">
+                    <Posts token={token}/>
+                </div>
 
             </main>
 

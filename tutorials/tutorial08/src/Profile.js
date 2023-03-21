@@ -2,18 +2,19 @@
 //TODO: asusme user is passed inot comp as prop:
 import React from 'react';
 
-export default function Profile({Profile}) {
+export default function Profile({profile}) {
     
     //return some jsx
-    if(!Profile) {
-        return;
+    if(!profile) {
+        return '';
     }
     return (
         <header>
-            <img src={Profile.thumb_url}/>
+            <img src={profile.thumb_url}/>
             <h3>
-                {Profile.username}
+                {profile.username}
             </h3>
+
         </header>
     );
 }

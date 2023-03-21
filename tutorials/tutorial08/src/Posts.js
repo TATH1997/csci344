@@ -11,7 +11,7 @@ export default function Posts({token}) {
                 headers: getHeaders(token)
             });
             const data = await response.json();
-            setPosts(data)
+            setPosts(data);
         }
         fetchPosts();
     }, [token]);
@@ -21,13 +21,17 @@ export default function Posts({token}) {
     }
    
     return (
+        <div>
+        {
         posts.map(post => {
             return (
-                <section key={post.id}>
+                <section>
+                    <p>{post.user.username}</p>
                     <img src={post.image_url}/>
-                    <div className="card">{post.caption}</div>
+                    <div className="card" key={post.id}>{post.caption}</div>
                 </section>
             )
         })
-    );     
+    }</div>
+    );        
 }

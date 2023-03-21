@@ -1,6 +1,9 @@
+//displayes suggestons 
 import React from 'react';
 
 export default function Suggestions({suggestion}) {
+
+
     <section class="profile">
     <img 
         src={suggestion.thumb_url} 
