@@ -264,10 +264,14 @@ const showModal = async (id) => {
     const profile=profileToHTML(post.user);
     const box=`
     <div class="modal-content">
-      <span onclick="hide()" class="close">&times;</span>
-      ${profile}
-      <img src="${img}"/>
-      <p>${htmlChunk}</p>
+        <span onclick="hide()" class="close">&times;</span>
+        <section class="image">
+            <header>${profile}<header/> 
+            <img src="${img}"/>
+        <section/>
+        <section class="commentsSection">
+            <p>${htmlChunk}</p>
+        <section/>
     </div>`;
     document.querySelector('.modal').style.display="block";
     document.querySelector('.modal').innerHTML = box;
