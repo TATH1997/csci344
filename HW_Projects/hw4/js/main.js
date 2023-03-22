@@ -266,14 +266,14 @@ const showModal = async (id) => {
     <div class="modal-content">
         <span onclick="hide()" class="close">&times;</span>
         <section class="image">
-            <header>${profile}<header/> 
+            ${profile} 
             <img src="${img}"/>
         <section/>
         <section class="commentsSection">
             <p>${htmlChunk}</p>
         <section/>
     </div>`;
-    document.querySelector('.modal').style.display="block";
+    document.querySelector('.modal').style.display="flex";
     document.querySelector('.modal').innerHTML = box;
     document.body.style.overflowY = 'auto';
 }
