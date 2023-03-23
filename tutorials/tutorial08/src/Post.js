@@ -25,7 +25,7 @@ export default function Post({post, token}) {
         <img src={actualPost.image_url} alt={actualPost.caption}/>
         <div>{actualPost.caption}</div> 
         <div className='buttons'>
-            <LikeButton post={actualPost} token={token}/>
+            <LikeButton post={actualPost} token={token} requeryPost={requeryPost}/>
         </div>
     </section>
     );        
