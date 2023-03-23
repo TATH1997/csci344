@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from "react";
 import { getHeaders } from './utils';
+import Post from './Post';
 
 export default function Posts({token}) { 
     const [posts, setPosts]=useState([]);
@@ -21,17 +22,9 @@ export default function Posts({token}) {
     }
    
     return (
-        <div>
+        <div id="posts">
         {
-        posts.map(post => {
-            return (
-                <section>
-                    <p>{post.user.username}</p>
-                    <img src={post.image_url}/>
-                    <div className="card" key={post.id}>{post.caption}</div>
-                </section>
-            )
-        })
+        posts.map(post => <Post key={post.id} post={post} token={token}/>)
     }</div>
     );        
 }

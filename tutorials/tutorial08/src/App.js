@@ -54,7 +54,7 @@ export default function App ({token}) {
                 <div id="posts">
                     <Posts token={token}/>
                 </div>
-
+    
             </main>
 
         </div>
