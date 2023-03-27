@@ -20,7 +20,7 @@ export default function App ({token}) {
         }
         fetchProfile();
     }, [token]);
-    console.log('access token:', token);
+    //console.log('access token:', token);    
     
     return (
         <div>
@@ -38,7 +38,7 @@ export default function App ({token}) {
                 </header>
                 <div className="suggestions">
                     <div>
-                        
+                        <Suggestions token={token}/>
                     </div>
                 </div>
             </aside>
@@ -47,7 +47,7 @@ export default function App ({token}) {
 
                 {/* Stories */}
                 <header className="stories">
-                    Stories go here...
+                    <Stories token={token}/>
                 </header>
 
                 {/* Posts */}

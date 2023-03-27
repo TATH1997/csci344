@@ -20,7 +20,7 @@ const showStories = async () => {
         }
     })
     const data = await response.json();
-    //console.log(data);
+    console.log(data);
     const htmlChunk = data.map(storyToHtml).join('');
     document.querySelector('#stories').innerHTML = htmlChunk;
 }

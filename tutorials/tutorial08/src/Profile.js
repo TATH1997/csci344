@@ -9,7 +9,7 @@ export default function Profile({profile}) {
         return '';
     }
     return (
-        <header>
+        <header className='profile'>
             <img src={profile.thumb_url}/>
             <h3>
                 {profile.username}

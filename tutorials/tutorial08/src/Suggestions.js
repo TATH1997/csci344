@@ -1,17 +1,27 @@
-//displayes suggestons 
 import React from 'react';
+import { useState, useEffect } from "react";
+import {getHeaders} from './utils';
+import Suggestion from './Suggestion';
 
-export default function Suggestions({suggestion}) {
+export default function Suggestions({token}) {
 
+    const [suggestions, setSuggestions]=useState([]);
 
-    <section class="profile">
-    <img 
-        src={suggestion.thumb_url} 
-        alt="profilePic" width="50" height="50"/>
-        <header>
-            <h2>${suggestion.username}</h2>
-            <h2>Suggested for you</h2>
-        </header>
-        <button id="foll" onclick="followSwitch(${suggestion.id})" aria-checked="true">follow</button>
-    </section>;
+    useEffect(() => {
+        async function fetchSuggestions() {
+            const response = await fetch('/api/suggestions/', {
+                headers: getHeaders(token)
+            });
+            const data = await response.json();
+            setSuggestions(data);
+        }
+        fetchSuggestions();
+    }, [token]);
+
+    return(
+        <div id="suggestions">
+        {
+        suggestions.map(suggestion => <Suggestion key={suggestion.id} suggestion={suggestion} token={token}/>)
+    }</div>
+    );
 }

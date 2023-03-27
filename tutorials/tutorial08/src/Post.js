@@ -2,6 +2,7 @@ import React from 'react';
 import LikeButton from './LikeButton';
 import { getHeaders } from './utils';
 import {useState} from "react";
+import BookMark from "./BookMark";
 
 
 export default function Post({post, token}) {  
@@ -26,6 +27,7 @@ export default function Post({post, token}) {
         <div>{actualPost.caption}</div> 
         <div className='buttons'>
             <LikeButton post={actualPost} token={token} requeryPost={requeryPost}/>
+            <BookMark post={actualPost} token={token} requeryPost={requeryPost}/>
         </div>
     </section>
     );        

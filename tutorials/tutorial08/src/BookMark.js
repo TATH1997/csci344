@@ -2,21 +2,18 @@ import React from "react";
 import { getHeaders } from "./utils";
 
 export default function LikeButton({post, token, requeryPost}) {
-    //some logic 
-    const likeId=post.current_user_like_id;
+    const bookmarkId=post.current_user_bookmark_id;
     const postId=post.id;
 
-    
-
-    async function likeUnLike() {
-        console.log(likeId, postId);
-        if(likeId) {
-            const response = await fetch(`/api/posts/likes/${likeId}`, {
+    async function bookmarkBool() {
+        console.log(bookmarkId, postId);
+        if(bookmarkId) {
+            const response = await fetch(`/api/bookmarks/${bookmarkId}`, {
             method: "DELETE",
             headers: getHeaders(token)
     });
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     requeryPost();
         }
 
@@ -24,16 +21,16 @@ export default function LikeButton({post, token, requeryPost}) {
             const postData={
                 "post_id": postId
             };
-            const response = await fetch("/api/posts/likes/", {
+            const response = await fetch("/api/bookmarks/", {
                 method: "POST",
                 headers: getHeaders(token),
                 body: JSON.stringify(postData)
             });
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             requeryPost();
          }
     }
-    //return some JSX
-    return(<button onClick={likeUnLike}>{likeId ? <i class="fas fa-heart"></i>: <i class="far fa-heart"></i>}</button>);
+
+    return(<button onClick={bookmarkBool}>{bookmarkId ? <i class="fa-solid fa-bookmark"></i>: <i class="fa-regular fa-bookmark"></i>}</button>);
 }
