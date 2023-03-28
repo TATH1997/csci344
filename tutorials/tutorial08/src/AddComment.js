@@ -1,7 +1,7 @@
 import React from "react";
 import { getHeaders } from "./utils";
 
-export default function AddComment(post, token, requeryRedraw) {
+export default function AddComment(post, token, requeryPost) {
     const postID=post.id;
 
     const addcomment = async (postId) => {
@@ -21,7 +21,7 @@ export default function AddComment(post, token, requeryRedraw) {
         });
         const data = await response.json();
         //console.log(data);
-        requeryRedraw(postId);
+        requeryPost(postId);
     }
 
     return(

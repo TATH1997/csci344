@@ -1,9 +1,52 @@
 import React from "react";
+import { getHeaders } from "./utils";
+import {useState, useEffect} from "react";
 
 export default function Suggestion({suggestion, token}) {
 
-    //need to add follow button
-    //<button id="foll" onClick={followSwitch({suggestion.id})} aria-checked="true">follow</button>
+    var followed=false; 
+
+    const[ actualSuggestion, setActualSuggestion] =useState(suggestion);
+
+    async function requerySuggestion() {
+        const postData={
+            "user_id": suggestion.id
+        };
+        const response = await fetch(`/api/following/${suggestion.id}`, {
+                method: "GET",
+                headers: getHeaders(token)
+            })
+        const data = await response.json();
+    setActualSuggestion(data);
+    } 
+    
+    const followSwitch = async (sugId) => {
+        if(!followed) {
+            const postData={
+                "user_id": sugId
+            };
+            console.log(sugId);
+            const response = await fetch("/api/following/", {
+                    method: "POST",
+                    headers: getHeaders(token),
+                    body: JSON.stringify(postData)
+                })
+            const data = await response.json();
+            console.log(data);
+            followed=true;  
+            requerySuggestion()
+        } else {
+            console.log(sugId);
+            const response = await fetch(`/api/following/${sugId}`, {
+                    method: "DELETE",
+                    headers: getHeaders(token)
+                })
+            const data = await response.json();
+            console.log(data);
+            followed=false;
+            requerySuggestion();
+        }
+    }
     return(
         <section className="profile">
     <img 
@@ -13,7 +56,7 @@ export default function Suggestion({suggestion, token}) {
             <h2>{suggestion.username}</h2>
             <h3>Suggested for you</h3>
         </header>
-        
+        <button id="foll" onClick={()=>followSwitch(suggestion.id)} aria-checked="true">{followed ? "unfollow" : "follow"}</button>
     </section>
     );
 }
