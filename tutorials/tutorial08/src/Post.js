@@ -3,6 +3,9 @@ import LikeButton from './LikeButton';
 import { getHeaders } from './utils';
 import {useState} from "react";
 import BookMark from "./BookMark";
+import ShowComments from "./ShowComments";
+import AddComment from "./AddComment";
+//import Comments from "./Comments";
 
 
 export default function Post({post, token}) {  
@@ -21,6 +24,8 @@ export default function Post({post, token}) {
     setActualPost(data);
     } 
 
+    
+
     //console.log(post);       
     return (<section className='card'>
         <img src={actualPost.image_url} alt={actualPost.caption}/>
@@ -28,6 +33,8 @@ export default function Post({post, token}) {
         <div className='buttons'>
             <LikeButton post={actualPost} token={token} requeryPost={requeryPost}/>
             <BookMark post={actualPost} token={token} requeryPost={requeryPost}/>
+            <ShowComments post={post} token={token} requeryPost={requeryPost}/>
+            <AddComment post={post} token={token} requeryPost={requeryPost}/>
         </div>
     </section>
     );        

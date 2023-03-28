@@ -32,5 +32,5 @@ export default function LikeButton({post, token, requeryPost}) {
          }
     }
 
-    return(<button onClick={bookmarkBool}>{bookmarkId ? <i class="fa-solid fa-bookmark"></i>: <i class="fa-regular fa-bookmark"></i>}</button>);
+    return(<button onClick={bookmarkBool} aria-label={bookmarkId ? "Remove Bookmark" : "Bookmark"}>{bookmarkId ? <i className="fa-solid fa-bookmark"></i>: <i className="fa-regular fa-bookmark"></i>}</button>);
 }

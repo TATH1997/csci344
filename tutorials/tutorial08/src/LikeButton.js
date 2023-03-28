@@ -35,5 +35,5 @@ export default function LikeButton({post, token, requeryPost}) {
          }
     }
     //return some JSX
-    return(<button onClick={likeUnLike}>{likeId ? <i class="fas fa-heart"></i>: <i class="far fa-heart"></i>}</button>);
+    return(<button onClick={likeUnLike} aria-label={likeId ? "Unlike post" : "Like post"}>{likeId ? <i className="fas fa-heart"></i>: <i className="far fa-heart"></i>}</button>);
 }
