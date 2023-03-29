@@ -19,7 +19,7 @@ export default function Post({post, token}) {
         headers: getHeaders(token)
     });
     const data = await response.json();
-    console.log(data); 
+    //console.log(data); 
     //need to set a state var
     setActualPost(data);
     } 

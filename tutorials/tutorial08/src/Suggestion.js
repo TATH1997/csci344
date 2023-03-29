@@ -21,6 +21,14 @@ export default function Suggestion({suggestion, token}) {
     } 
     
     const followSwitch = async (sugId) => {
+        async function getAndShowData2() {
+            const response = await fetch("/api/following/", {
+                method: "GET",
+                headers: getHeaders(token)
+            });
+            const data = await response.json();
+        }
+        
         if(!followed) {
             const postData={
                 "user_id": sugId
@@ -36,6 +44,9 @@ export default function Suggestion({suggestion, token}) {
             followed=true;  
             requerySuggestion()
         } else {
+            const postData={
+                "user_id": sugId
+            };
             console.log(sugId);
             const response = await fetch(`/api/following/${sugId}`, {
                     method: "DELETE",

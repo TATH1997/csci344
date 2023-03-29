@@ -18,6 +18,8 @@ export default function Suggestions({token}) {
         fetchSuggestions();
     }, [token]);
 
+    console.log(suggestions);
+
     return(
         <div id="suggestions">
         {

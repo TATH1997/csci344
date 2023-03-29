@@ -1,7 +1,7 @@
 import React from "react";
 import { getHeaders } from "./utils";
 
-export default function LikeButton({post, token, requeryPost}) {
+export default function BookMark({post, token, requeryPost}) {
     const bookmarkId=post.current_user_bookmark_id;
     const postId=post.id;
 

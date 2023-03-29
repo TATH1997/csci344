@@ -1,7 +1,7 @@
 import React from "react";
 import { getHeaders } from "./utils";
 
-export default function AddComment(post, token, requeryPost) {
+export default function AddComment({post, token, requeryPost}) {
     const postID=post.id;
 
     const addcomment = async (postId) => {
@@ -14,14 +14,14 @@ export default function AddComment(post, token, requeryPost) {
         };
     
         // Create the comment:
-        const response = await fetch("/api/comments", {
+        const response = await fetch("/api/comments/", {
             method: "POST",
             headers: getHeaders(token),
             body: JSON.stringify(postData)
         });
         const data = await response.json();
-        //console.log(data);
-        requeryPost(postId);
+        document.getElementById('comm').value="";
+        requeryPost();
     }
 
     return(

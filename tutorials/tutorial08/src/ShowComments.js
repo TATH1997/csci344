@@ -2,9 +2,12 @@ import React from "react";
 
 export default function ShowComments({post, requeryPost, token}) {
 
-    const hasComments = post.comments.length > 0;
-    const lastCommentIndex = post.comments.length - 1
+    var hasComments = post.comments.length > 0;
+    var lastCommentIndex = post.comments.length - 1
     const postID=post.id;
+    
+    console.log("index: "+lastCommentIndex);
+    console.log("len: "+post.comments.length);
 
 
     if (hasComments) {
