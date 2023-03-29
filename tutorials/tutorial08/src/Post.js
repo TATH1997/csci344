@@ -33,8 +33,8 @@ export default function Post({post, token}) {
         <div className='buttons'>
             <LikeButton post={actualPost} token={token} requeryPost={requeryPost}/>
             <BookMark post={actualPost} token={token} requeryPost={requeryPost}/>
-            <ShowComments post={post} token={token} requeryPost={requeryPost}/>
-            <AddComment post={post} token={token} requeryPost={requeryPost}/>
+            <ShowComments post={actualPost} token={token} requeryPost={requeryPost}/>
+            <AddComment post={actualPost} token={token} requeryPost={requeryPost}/>
         </div>
     </section>
     );        

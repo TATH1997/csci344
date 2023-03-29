@@ -9,7 +9,7 @@ export default function ShowComments({post, requeryPost, token}) {
     console.log("index: "+lastCommentIndex);
     console.log("len: "+post.comments.length);
 
-
+    
     if (hasComments) {
         //need to add button 
         //some code: <button onClick="showModal(${post.id})">View all {post.comments.length} comments</button>
