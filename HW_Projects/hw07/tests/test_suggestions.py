@@ -23,6 +23,7 @@ class TestSuggestionsEndpoint(unittest.TestCase):
 
     def test_suggestions_get_check_if_data_structure_correct(self):
         response = requests.get('{0}/api/suggestions'.format(root_url))
+        print("response: ", response, "-fin")
         self.assertEqual(response.status_code, 200)
         suggestions = response.json()
         suggestion = suggestions[0]

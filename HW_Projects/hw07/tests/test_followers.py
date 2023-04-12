@@ -18,6 +18,8 @@ class TestFollowerListEndpoint(unittest.TestCase):
         authorized_user_ids = utils.get_follower_ids(self.current_user.get('id'))
         
         self.assertTrue(len(authorized_user_ids) > 0)
+        # print("follower_list: ", follower_list, "-fin")
+        # print("authorized_user_ids: ", authorized_user_ids, "-fin")
         self.assertEqual(len(authorized_user_ids), len(follower_list))
         
         # make sure that every follower retrieved from the endpoint
