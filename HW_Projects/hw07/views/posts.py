@@ -48,7 +48,14 @@ class PostListEndpoint(Resource):
     def post(self):
         # create a new post based on the data posted in the body 
         body = request.get_json()
-        return Response(json.dumps({}), mimetype="application/json", status=201)
+        if not body.get('image_url'):
+            return Response(json.dumps({'error' : 'url required'}), status=400 )
+        
+        post=Post(image_url=body.get('image_url'), caption=body.get('caption'), alt_text=body.get('alt_text'), user_id=self.current_user.id)
+
+        db.session.add(post)
+        db.session.commit()
+        return Response(json.dumps(post.to_dict()), mimetype="application/json", status=201)
         
 class PostDetailEndpoint(Resource):
 
@@ -65,6 +72,10 @@ class PostDetailEndpoint(Resource):
 
     def delete(self, id):
         # delete post where "id"=id
+        post=self.get(id)
+        db.session.delete(post)
+        db.session.commit()
+        #Post.delete.filter_by(id=id).all()
         return Response(json.dumps({}), mimetype="application/json", status=200)
 
 
