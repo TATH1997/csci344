@@ -20,9 +20,6 @@ class PostListEndpoint(Resource):
         self.current_user = current_user
 
     def get(self):
-        #print("testing ", request.args.get('limit'))
-        # get posts created by one of these users:
-        #Get all of the user id that the user is following 
         try:
             num=request.args.get('limit') or 20
             num=int(num)
@@ -66,14 +63,33 @@ class PostDetailEndpoint(Resource):
     def patch(self, id):
         # update post based on the data posted in the body 
         body = request.get_json()
-        print(body)       
-        return Response(json.dumps({}), mimetype="application/json", status=200)
+        post = Post.query.get(id)
+        if not post:
+            return Response(json.dumps({'error' : 'post does not exist'}), mimetype="application/json", status=404)
+        if post.user_id!=self.current_user.id:
+            return Response(json.dumps({'error' : 'cannot modify other users posts'}), mimetype="application/json", status=404)
+        if body.get('image_url'):
+            post.image_url=body.get('image_url')
+        if body.get('caption'):
+            post.caption=body.get('caption')
+        if body.get('alt_text'):
+            post.alt_text=body.get('alt_text')
+        # saves changed to db
+        db.session.commit()
+        return Response(json.dumps(post.to_dict()), mimetype="application/json", status=200)
 
 
     def delete(self, id):
+        allPosts=Post.query.all()
+        validIDs=[]
+        for post in allPosts:
+            if post.user_id!=self.current_user.id:
+                continue
+            validIDs.append(post.id)
+        if (id==None) or (id not in validIDs):
+            return Response(json.dumps({'error' : 'Enter a valid ID'}), status=404)  
         # delete post where "id"=id
-        post=self.get(id)
-        db.session.delete(post)
+        Post.query.filter_by(id=id).delete()
         db.session.commit()
         #Post.delete.filter_by(id=id).all()
         return Response(json.dumps({}), mimetype="application/json", status=200)

@@ -207,6 +207,9 @@ def restore_following(following_original):
         conn.commit()
         conn.close()
 
+def get_post_that_user_cannot_edit_delete(user_id):
+    return get_post_that_user_cannot_access(user_id)
+
 def get_following_ids(user_id):
     with db.connect() as conn:
         inspector = inspect(db)
