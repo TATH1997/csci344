@@ -155,12 +155,25 @@ const handleServerMessage = ev => {
     if (data.type === "login") {
         console.log('A user has just connected:');
         console.log(data);
+        const list=data.active_users.map(item=>`<li>${item}</li>`);
+        document.querySelector('#users-list ul').innerHTML=list.join(' ');
+
     } else if (data.type === "disconnect") {
         console.log('A user has just disconnected:');
         console.log(data);
+        const list=data.active_users.map(item=>`<li>${item}</li>`);
+        document.querySelector('#users-list ul').innerHTML=list.join(' ');
+
     } else if (data.type === "chat") {
         console.log('A user has just sent a chat message:');
         console.log(data);
+        let className='right';
+        if (data.username===username){
+            className='left';
+        } 
+        const messageHTML=`<div class="${className}">${data.username}: ${data.text}</div>`
+        document.querySelector('#chat').insertAdjacentHTML("beforeend", messageHTML);
+
     } else {
         console.error("Message type not recognized.");
         console.log(data);

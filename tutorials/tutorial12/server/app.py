@@ -84,7 +84,7 @@ async def respond_to_message(websocket, message):
             'details': 'See instructions for list of valid message formats.'}
         return await websocket.send(json.dumps(data))
     
-    await websocket.send(json.dumps(data))
+    #await websocket.send(json.dumps(data))
     response_message={}
     if data.get('type')=='login':
             logged_in_users[websocket]=data.get('username')
@@ -96,6 +96,7 @@ async def respond_to_message(websocket, message):
                 "active_users": list(logged_in_users.values())
             }
     elif data.get('type')=='disconnect':
+
         # remove user 
         del logged_in_users[websocket]
         # let everyone  know user has left 
@@ -114,7 +115,7 @@ async def respond_to_message(websocket, message):
     #Give all rel users the message
     for sock in logged_in_users:
         
-        await sock.send(json.dumps(data))
+        await sock.send(json.dumps(response_message))
 
 
 async def broadcast_messages(websocket, path):
