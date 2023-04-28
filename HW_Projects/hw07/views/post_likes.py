@@ -2,12 +2,14 @@ from flask import Response, request
 from flask_restful import Resource
 from models import LikePost, Post, Following, db
 import json
+import flask_jwt_extended
 
 class PostLikesListEndpoint(Resource):
 
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def post(self):
         # create a new "like_post" based on the data posted in the body 
         body = request.get_json()
@@ -52,6 +54,7 @@ class PostLikesDetailEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def delete(self, id):
         # delete "like_post" where "id"=id
         if type(id)!=int:
@@ -59,8 +62,15 @@ class PostLikesDetailEndpoint(Resource):
         like = LikePost.query.get(id)
         if not like:
             return Response(json.dumps({'error': 'No such comment exists'}), mimetype="application/json", status=404)
-        if like.user_id!=self.current_user.id:
-            return Response(json.dumps({'error': 'You can only delete your comments'}), mimetype="application/json", status=404)
+        LikeList=LikePost.query.filter_by(user_id=self.current_user.id)
+        validIDs=[]
+        for item in LikeList:
+            validIDs.append(item.post_id)
+        if id not in validIDs:
+            return Response(json.dumps({'error': 'You can only unfollow those you already follow'}), mimetype="application/json", status=404)
+        
+        # if like.user_id!=self.current_user.id:
+        #     return Response(json.dumps({'error': 'You can only delete your comments'}), mimetype="application/json", status=404)
         LikePost.query.filter_by(id=id).delete()
         db.session.commit()
         return Response(json.dumps({}), mimetype="application/json", status=200)
@@ -72,7 +82,7 @@ def initialize_routes(api):
         PostLikesListEndpoint, 
         '/api/posts/likes', 
         '/api/posts/likes/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )
 
     api.add_resource(
