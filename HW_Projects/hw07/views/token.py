@@ -45,7 +45,7 @@ class AccessTokenEndpoint(Resource):
                 json.dumps({
                     'message' : 'bad password'
                 }), 
-                status=401
+                status=401  
             )
         # '''
         # if a matching user is found in the DB, encode the user's id in the JWT

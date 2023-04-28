@@ -1,7 +1,10 @@
+import json
+from urllib import response
 from flask import request, \
     make_response, render_template, redirect
 from models import User
 import flask_jwt_extended
+import datetime
 
 def logout():
     # # Uncomment these lines to delete the cookies and
@@ -14,8 +17,30 @@ def logout():
 
 def login():
     if request.method == 'POST':
-        print('See lecture 25 video + starter files')
-        return 'See lecture 25 video + starter files'
+        un = request.form.get('username')
+        password = request.form.get('password')
+
+        user=User.query.filter_by(username=un).one_or_none()
+        if(not user): 
+            return render_template(
+                'login.html', message="Username not in database"
+        )  
+        if(user and not User.check_password(user, password)):
+            return render_template(
+                'login.html', message="Bad Password"
+            )
+        
+        #User is authorized
+        expires = datetime.timedelta(minutes=20)
+
+        # # generate the token using the Flask JWT Extended library:
+        access_token = flask_jwt_extended.create_access_token(
+            identity=user.id, 
+            expires_delta=expires
+        )
+        response = make_response(redirect('/', 302))
+        flask_jwt_extended.set_access_cookies(response, access_token)
+        return response
     else:
         return render_template(
             'login.html'
