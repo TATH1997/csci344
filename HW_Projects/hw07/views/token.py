@@ -11,14 +11,49 @@ class AccessTokenEndpoint(Resource):
     # create_access_token() function is used to actually generate the JWT.
     def post(self):
         body = request.get_json() or {}
-        print(body)
-        '''
-        if a matching user is found in the DB, encode the user's id in the JWT
-        access and refresh token as follows:
-        access_token = flask_jwt_extended.create_access_token(identity=user.id)
-        refresh_token = flask_jwt_extended.create_refresh_token(identity=user.id)
-        '''
-        return 'Implement me!'
+        un=body.get('username')
+        password=body.get('password')
+        #grab username from DB
+        user=User.query.filter_by(username=un).one_or_none()
+        if(not password): 
+            return Response(
+                json.dumps({
+                    'message' : 'password null'
+                }), 
+                status=400
+            )
+        
+        if(not user): 
+            return Response(
+                json.dumps({
+                    'message' : 'UserName'
+                }), 
+                status=401
+            )
+        
+
+        if(User.check_password(user, password)):
+            return Response(    
+                json.dumps({
+                    "access_token" : flask_jwt_extended.create_access_token(identity=user.id),
+                    "refresh_token" : flask_jwt_extended.create_refresh_token(identity=user.id)
+                }), 
+                status=200
+            ) 
+        else:
+            return Response(
+                json.dumps({
+                    'message' : 'bad password'
+                }), 
+                status=401
+            )
+        # '''
+        # if a matching user is found in the DB, encode the user's id in the JWT
+        # access and refresh token as follows:
+        # access_token = flask_jwt_extended.create_access_token(identity=user.id)
+        # refresh_token = flask_jwt_extended.create_refresh_token(identity=user.id)
+        # '''
+        # return 'Implement me!'
 
 
 class RefreshTokenEndpoint(Resource):
